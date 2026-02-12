@@ -9,7 +9,7 @@
 <body>
   <main class="app">
     <h1>Mic Move</h1>
-    <p class="subtitle">Stream iPhone mic to your PC on local network only.</p>
+    <p class="subtitle">LAN-only iPhone mic bridge for your PC.</p>
 
     <section class="card">
       <label for="role">Role</label>
@@ -17,51 +17,42 @@
         <option value="receiver">Receiver (PC)</option>
         <option value="sender">Sender (iPhone)</option>
       </select>
+
+      <label for="nickname">Nickname</label>
+      <input id="nickname" type="text" maxlength="24" placeholder="e.g. Jamie-PC or iPhone" />
+
+      <button id="save-profile">Save Profile</button>
+      <p id="profile-status" class="status">Not connected to signaling server</p>
     </section>
 
     <section id="receiver" class="card">
       <h2>Receiver (PC)</h2>
-      <p>1) Click Create Offer. 2) Copy offer to phone. 3) Paste answer from phone.</p>
-
-      <div class="row">
-        <button id="create-offer">Create Offer</button>
-        <button id="copy-offer" disabled>Copy Offer</button>
-      </div>
-      <textarea id="offer-out" placeholder="Offer appears here" readonly></textarea>
-
-      <label for="answer-in">Answer from phone</label>
-      <textarea id="answer-in" placeholder="Paste answer from phone"></textarea>
-      <button id="apply-answer" disabled>Apply Answer</button>
-
-      <label for="output-device">Output device (set to VB-CABLE Input)</label>
-      <select id="output-device"></select>
-      <audio id="remote-audio" autoplay playsinline controls></audio>
+      <p>Click a sender nickname to connect.</p>
+      <ul id="sender-list" class="peer-list"></ul>
       <p id="receiver-status" class="status">Idle</p>
+
+      <label for="output-device">Output device (pick VB-CABLE Input if shown)</label>
+      <select id="output-device"></select>
+      <button id="pick-output">Pick Output Device</button>
+      <audio id="remote-audio" autoplay playsinline controls></audio>
+      <p id="output-help" class="status"></p>
     </section>
 
     <section id="sender" class="card hidden">
       <h2>Sender (iPhone)</h2>
-      <p>1) Start mic. 2) Paste PC offer. 3) Create answer and copy to PC.</p>
-
       <button id="start-mic">Start Mic</button>
       <p id="sender-status" class="status">Mic off</p>
 
-      <label for="offer-in">Offer from PC</label>
-      <textarea id="offer-in" placeholder="Paste offer from PC"></textarea>
-
-      <div class="row">
-        <button id="create-answer" disabled>Create Answer</button>
-        <button id="copy-answer" disabled>Copy Answer</button>
-      </div>
-      <textarea id="answer-out" placeholder="Answer appears here" readonly></textarea>
+      <p>Click a receiver nickname to connect.</p>
+      <ul id="receiver-list" class="peer-list"></ul>
     </section>
 
     <section class="card notes">
       <h2>Privacy</h2>
       <ul>
-        <li>No analytics, ads, or external libraries.</li>
-        <li>No STUN/TURN servers configured; audio stays direct on your LAN.</li>
-        <li>GitHub Pages only serves static files; it does not relay mic audio.</li>
+        <li>Audio is WebRTC direct between your two browsers.</li>
+        <li>No STUN/TURN configured (`iceServers: []`).</li>
+        <li>Local signaling server runs only on your PC/LAN.</li>
       </ul>
     </section>
   </main>
